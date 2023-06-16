@@ -1,5 +1,5 @@
 CREATE TABLE "Endereco"(
-    "codEndereco" SERIAL PRIMARY KEY,
+    "codEndereco" CHAR(36) PRIMARY KEY,
     "numero" INT NOT NULL,
     "cidade" VARCHAR(255) NOT NULL,
     "cep" CHAR(9) NOT NULL,
@@ -8,17 +8,17 @@ CREATE TABLE "Endereco"(
 );
 
 CREATE TABLE "CategoriaLoja"(
-    "codCategoria" SERIAL PRIMARY KEY,
+    "codCategoria" CHAR(36) PRIMARY KEY,
     "categoria" VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE "CategoriaProduto"(
-    "codCategoria" SERIAL PRIMARY KEY,
+    "codCategoria" CHAR(36) PRIMARY KEY,
     "categoria" VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE "Loja"(
-    "codLoja" SERIAL PRIMARY KEY,
+    "codLoja" CHAR(36) PRIMARY KEY,
     "codCategoria" INT NOT NULL,
     "codEndereco" INT NOT NULL,
     "descricao" VARCHAR(255) NOT NULL,
@@ -30,7 +30,7 @@ ALTER TABLE "Loja" ADD CONSTRAINT "Loja_codCategoria_fkey" FOREIGN KEY ("codCate
 ALTER TABLE "Loja" ADD CONSTRAINT "Loja_codEndereco_fkey" FOREIGN KEY ("codEndereco") REFERENCES "Endereco"("codEndereco");
 
 CREATE TABLE "Gestor"(
-    "codGestor" SERIAL PRIMARY KEY,
+    "codGestor" CHAR(36) PRIMARY KEY,
     "codLoja" INT NOT NULL,
     "funcao" VARCHAR(63) NOT NULL,
     "nome" VARCHAR(255) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE "Gestor"(
 ALTER TABLE "Gestor" ADD CONSTRAINT "Gestor_codLoja_fkey" FOREIGN KEY ("codLoja") REFERENCES "Loja"("codLoja");
 
 CREATE TABLE "Produto"(
-    "codProduto" SERIAL PRIMARY KEY,
+    "codProduto" CHAR(36) PRIMARY KEY,
     "codCategoria" INT NOT NULL,
     "nome" VARCHAR(63) NOT NULL,
     "descricao" VARCHAR(255) NOT NULL
@@ -50,8 +50,8 @@ CREATE TABLE "Produto"(
 ALTER TABLE "Produto" ADD CONSTRAINT "Produto_codCategoria_fkey" FOREIGN KEY ("codCategoria") REFERENCES "CategoriaProduto"("codCategoria");
 
 CREATE TABLE "ProdutoLoja"(
-    "codProduto" INT,
-    "codLoja" INT,
+    "codProduto" CHAR(36),
+    "codLoja" CHAR(36),
     "quantidade" INT DEFAULT 0,
     "preco" NUMERIC NOT NULL,
     PRIMARY KEY ("codProduto", "codLoja")
@@ -62,7 +62,7 @@ ALTER TABLE "ProdutoLoja" ADD CONSTRAINT "ProdutoLoja_codProduto_fkey" FOREIGN K
 ALTER TABLE "ProdutoLoja" ADD CONSTRAINT "ProdutoLoja_codLoja_fkey" FOREIGN KEY ("codLoja") REFERENCES "Loja"("codLoja");
 
 CREATE TABLE "Cliente"(
-    "codCliente" SERIAL PRIMARY KEY,
+    "codCliente" CHAR(36) PRIMARY KEY,
     "codEndereco" INT NOT NULL,
     "nome" VARCHAR(63) NOT NULL,
     "email" VARCHAR(255) NOT NULL
@@ -71,7 +71,7 @@ CREATE TABLE "Cliente"(
 ALTER TABLE "Cliente" ADD CONSTRAINT "Cliente_codEndereco_fkey" FOREIGN KEY ("codEndereco") REFERENCES "Endereco"("codEndereco");
 
 CREATE TABLE "Compra"(
-    "codCompra" SERIAL PRIMARY KEY,
+    "codCompra" CHAR(36) PRIMARY KEY,
     "codEndereco" INT NOT NULL,
     "codCliente" INT NOT NULL,
     "codProduto" INT NOT NULL,
