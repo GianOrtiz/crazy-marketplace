@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE "Endereco"(
     "codEndereco" CHAR(36) PRIMARY KEY,
     "numero" INT NOT NULL,
@@ -85,3 +87,5 @@ ALTER TABLE "Compra" ADD CONSTRAINT "Compra_codEndereco_fkey" FOREIGN KEY ("codE
 ALTER TABLE "Compra" ADD CONSTRAINT "Compra_codCliente_fkey" FOREIGN KEY ("codCliente") REFERENCES "Cliente"("codCliente");
 
 ALTER TABLE "Compra" ADD CONSTRAINT "Compra_codProduto_fkey" FOREIGN KEY ("codProduto") REFERENCES "Produto"("codProduto");
+
+COMMIT;
