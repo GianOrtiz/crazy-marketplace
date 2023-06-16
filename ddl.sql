@@ -19,8 +19,8 @@ CREATE TABLE "CategoriaProduto"(
 
 CREATE TABLE "Loja"(
     "codLoja" CHAR(36) PRIMARY KEY,
-    "codCategoria" INT NOT NULL,
-    "codEndereco" INT NOT NULL,
+    "codCategoria" CHAR(36) NOT NULL,
+    "codEndereco" CHAR(36) NOT NULL,
     "descricao" VARCHAR(255) NOT NULL,
     "nome" VARCHAR(63) NOT NULL
 );
@@ -31,7 +31,7 @@ ALTER TABLE "Loja" ADD CONSTRAINT "Loja_codEndereco_fkey" FOREIGN KEY ("codEnder
 
 CREATE TABLE "Gestor"(
     "codGestor" CHAR(36) PRIMARY KEY,
-    "codLoja" INT NOT NULL,
+    "codLoja" CHAR(36) NOT NULL,
     "funcao" VARCHAR(63) NOT NULL,
     "nome" VARCHAR(255) NOT NULL,
     "cpf" CHAR(14) NOT NULL,
@@ -42,7 +42,7 @@ ALTER TABLE "Gestor" ADD CONSTRAINT "Gestor_codLoja_fkey" FOREIGN KEY ("codLoja"
 
 CREATE TABLE "Produto"(
     "codProduto" CHAR(36) PRIMARY KEY,
-    "codCategoria" INT NOT NULL,
+    "codCategoria" CHAR(36) NOT NULL,
     "nome" VARCHAR(63) NOT NULL,
     "descricao" VARCHAR(255) NOT NULL
 );
@@ -63,7 +63,7 @@ ALTER TABLE "ProdutoLoja" ADD CONSTRAINT "ProdutoLoja_codLoja_fkey" FOREIGN KEY 
 
 CREATE TABLE "Cliente"(
     "codCliente" CHAR(36) PRIMARY KEY,
-    "codEndereco" INT NOT NULL,
+    "codEndereco" CHAR(36) NOT NULL,
     "nome" VARCHAR(63) NOT NULL,
     "email" VARCHAR(255) NOT NULL
 );
@@ -72,9 +72,9 @@ ALTER TABLE "Cliente" ADD CONSTRAINT "Cliente_codEndereco_fkey" FOREIGN KEY ("co
 
 CREATE TABLE "Compra"(
     "codCompra" CHAR(36) PRIMARY KEY,
-    "codEndereco" INT NOT NULL,
-    "codCliente" INT NOT NULL,
-    "codProduto" INT NOT NULL,
+    "codEndereco" CHAR(36) NOT NULL,
+    "codCliente" CHAR(36) NOT NULL,
+    "codProduto" CHAR(36) NOT NULL,
     "data" TIMESTAMP DEFAULT NOW(),
     "valor" NUMERIC NOT NULL,
     "quantidade" INT NOT NULL
