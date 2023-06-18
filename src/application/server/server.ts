@@ -6,6 +6,7 @@ import { Controllers, setupControllers } from '../controller';
 import { registerCategoriaLojaRoutes } from './routes/categoria-loja';
 import { registerEnderecoRoutes } from './routes/endereco';
 import { registerCategoriaProdutoRoutes } from './routes/categoria-produto';
+import { registerRoutes } from './routes';
 
 export default class Server {
   private hapi: Hapi.Server;
@@ -26,8 +27,6 @@ export default class Server {
   }
 
   private setupRoutes() {
-    registerCategoriaLojaRoutes(this.hapi, this.controllers.categoriaLoja);
-    registerEnderecoRoutes(this.hapi, this.controllers.endereco);
-    registerCategoriaProdutoRoutes(this.hapi, this.controllers.categoriaProduto);
+    registerRoutes(this.hapi, this.controllers);
   }
 }
