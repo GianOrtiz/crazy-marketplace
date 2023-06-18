@@ -5,6 +5,7 @@ import { getConnectionPool } from '../../infrastructure/sql';
 import { Controllers, setupControllers } from '../controller';
 import { registerCategoriaLojaRoutes } from './routes/categoria-loja';
 import { registerEnderecoRoutes } from './routes/endereco';
+import { registerCategoriaProdutoRoutes } from './routes/categoria-produto';
 
 export default class Server {
   private hapi: Hapi.Server;
@@ -27,5 +28,6 @@ export default class Server {
   private setupRoutes() {
     registerCategoriaLojaRoutes(this.hapi, this.controllers.categoriaLoja);
     registerEnderecoRoutes(this.hapi, this.controllers.endereco);
+    registerCategoriaProdutoRoutes(this.hapi, this.controllers.categoriaProduto);
   }
 }
