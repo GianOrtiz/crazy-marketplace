@@ -8,6 +8,7 @@ import ProdutoController from './produto';
 import ProdutoLojaController from './produto-loja';
 import ClienteController from './cliente';
 import CompraController from './compra';
+import StatsController from './stats';
 
 export type Controllers = {
   categoriaLoja: CategoriaLojaController;
@@ -17,6 +18,7 @@ export type Controllers = {
   produto: ProdutoController;
   cliente: ClienteController;
   compra: CompraController;
+  stats: StatsController;
 };
 
 export const setupControllers = (databaseConnPool: Pool): Controllers => {
@@ -30,5 +32,6 @@ export const setupControllers = (databaseConnPool: Pool): Controllers => {
     produto: new ProdutoController(databaseConnPool),
     cliente: new ClienteController(databaseConnPool),
     compra: new CompraController(databaseConnPool),
+    stats: new StatsController(databaseConnPool),
   };
 };

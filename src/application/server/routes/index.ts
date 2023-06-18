@@ -7,6 +7,7 @@ import { registerLojaRoutes } from './loja';
 import { registerClienteRoutes } from './cliente';
 import { registerProdutoRoutes } from './produtos';
 import { registerCompraRoutes } from './compra';
+import { registerStatsRoutes } from './stats';
 
 export const registerRoutes = (hapi: Hapi.Server, controllers: Controllers) => {
   registerCategoriaLojaRoutes(hapi, controllers.categoriaLoja);
@@ -16,4 +17,5 @@ export const registerRoutes = (hapi: Hapi.Server, controllers: Controllers) => {
   registerProdutoRoutes(hapi, controllers.produto);
   registerClienteRoutes(hapi, controllers.cliente);
   registerCompraRoutes(hapi, controllers.compra);
+  registerStatsRoutes(hapi, controllers.stats);
 };
