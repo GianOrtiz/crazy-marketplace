@@ -1,0 +1,719 @@
+openapi: 3.0.3
+info:
+  title: Crazy Marketplace
+  description: Definição da API do crazy marketplace para testes
+  version: 0.1.0
+servers:
+  - url: http://localhost:8000
+tags:
+  - name: endereco
+    description: CRUD de enderecos
+  - name: cliente
+    description: CRUD de clientes
+  - name: categoriaLoja
+    description: CRUD de categoria das lojas
+  - name: categoriaProduto
+    description: CRUD de categoria de produtos
+  - name: loja
+    description: CRUD de lojas
+  - name: produto
+    description: CRUD de produtos
+  - name: compra
+    description: CRUD de compras
+  - name: stats
+    description: Consultas de sumarização
+paths:
+  /enderecos/{codEndereco}:
+    get:
+      tags:
+        - endereco
+      summary: Obtem o endereço pelo codEndereco
+      operationId: obtemEndereco
+      parameters:
+        - name: codEndereco
+          in: path
+          description: Código do endereço
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Endereço obtido com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endereco'          
+        '400':
+          description: Código inválido
+    delete:
+      tags:
+        - endereco
+      summary: Remove o endereço do sistema
+      operationId: removeEndereco
+      parameters:
+        - name: codEndereco
+          in: path
+          description: Código do endereço
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Endereço removido com sucesso
+        '400':
+          description: Código inválido
+    put:
+      tags:
+        - endereco
+      summary: Atualiza as informações de endereço
+      parameters:
+        - name: codEndereco
+          in: path
+          description: Código do endereço para atualizar
+          required: true
+          schema:
+            type: string
+      operationId: atualizaEndereco
+      requestBody:
+        description: Valores para atualização de endereco
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEndereco'
+        required: true
+      responses:
+        '200':
+          description: Atualização com sucesso
+        '400':
+          description: Código de endereço inválido
+  /enderecos:
+    get:
+      tags:
+        - endereco
+      summary: Obtem os endereços do sistema
+      operationId: obtemEnderecos
+      responses:
+        '200':
+          description: Endereços obtidos com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Endereco'       
+        '400':
+          description: Código inválido
+    post:
+      tags:
+        - endereco
+      summary: Cria um novo endereço no sistema
+      operationId: criaEndereco
+      requestBody:
+        description: Valores para criar um novo endereco
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEndereco'
+        required: true
+      responses:
+        '200':
+          description: Sucesso na criação, use o GET para obter o id.
+  /categoria-lojas/{codCategoria}:
+    parameters:
+        - name: codCategoria
+          in: path
+          description: Código do categoria para atualizar
+          required: true
+          schema:
+            type: string
+    get:
+      tags:
+        - categoriaLoja
+      summary: Obtem a categoria pelo codCategoria
+      operationId: obtemCategoriaLoja
+      responses:
+        '200':
+          description: Categoria obtida com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriaLoja'          
+        '400':
+          description: Código inválido
+    delete:
+      tags:
+        - categoriaLoja
+      summary: Remove a categoria de loja do sistema
+      operationId: removeCategoriaLoja
+      responses:
+        '200':
+          description: Categoria removida com sucesso
+        '400':
+          description: Código inválido
+    put:
+      tags:
+        - categoriaLoja
+      summary: Atualiza as informações da categoria da loja
+      operationId: atualizaCategoriaLoja
+      requestBody:
+        description: Valores para atualização.
+        content:
+          application/json:
+            schema:
+              properties:
+                categoria:
+                  type: string
+        required: true
+      responses:
+        '200':
+          description: Atualização com sucesso
+        '400':
+          description: Código inválido
+  /categoria-lojas:
+    get:
+      tags:
+        - categoriaLoja
+      summary: Obtem as categorias de loja no sistema
+      operationId: obtemCategoriaLojas
+      responses:
+        '200':
+          description: Categorias obtidas com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoriaLoja'       
+        '400':
+          description: Código inválido
+    post:
+      tags:
+        - categoriaLoja
+      summary: Cria uma nova categoria de loja no sistema
+      operationId: criaCategoriaLoja
+      requestBody:
+        description: Valores para criar
+        content:
+          application/json:
+            schema:
+              properties:
+                categoria:
+                  type: string
+        required: true
+      responses:
+        '200':
+          description: Sucesso na criação, use o GET para obter o id.
+  /categoria-produtos/{codCategoria}:
+    parameters:
+        - name: codCategoria
+          in: path
+          description: Código do categoria para atualizar
+          required: true
+          schema:
+            type: string
+    get:
+      tags:
+        - categoriaProduto
+      summary: Obtem a categoria pelo codCategoria
+      operationId: obtemCategoriaProduto
+      responses:
+        '200':
+          description: Categoria obtida com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriaProduto'          
+        '400':
+          description: Código inválido
+    delete:
+      tags:
+        - categoriaProduto
+      summary: Remove a categoria do produto do sistema
+      operationId: removeCategoriaProduto
+      responses:
+        '200':
+          description: Categoria removida com sucesso
+        '400':
+          description: Código inválido
+    put:
+      tags:
+        - categoriaProduto
+      summary: Atualiza as informações da categoria da produto
+      operationId: atualizaCategoriaProduto
+      requestBody:
+        description: Valores para atualização.
+        content:
+          application/json:
+            schema:
+              properties:
+                categoria:
+                  type: string
+        required: true
+      responses:
+        '200':
+          description: Atualização com sucesso
+        '400':
+          description: Código inválido
+  /categoria-produtos:
+    get:
+      tags:
+        - categoriaProduto
+      summary: Obtem as categorias de produto no sistema
+      operationId: obtemCategoriaProdutos
+      responses:
+        '200':
+          description: Categorias obtidas com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoriaProduto'       
+        '400':
+          description: Código inválido
+    post:
+      tags:
+        - categoriaProduto
+      summary: Cria uma nova categoria de produto no sistema
+      operationId: criaCategoriaProduto
+      requestBody:
+        description: Valores para criar
+        content:
+          application/json:
+            schema:
+              properties:
+                categoria:
+                  type: string
+        required: true
+      responses:
+        '200':
+          description: Sucesso na criação, use o GET para obter o id.
+  /clientes/{codCliente}:
+    parameters:
+        - name: codCliente
+          in: path
+          description: Código do cliente
+          required: true
+          schema:
+            type: string
+    get:
+      tags:
+        - cliente
+      summary: Obtem o cliente pelo codCliente
+      operationId: obtemCliente
+      responses:
+        '200':
+          description: Categoria obtida com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'          
+        '400':
+          description: Código inválido
+    delete:
+      tags:
+        - cliente
+      summary: Remove o cliente do sistema
+      operationId: removeCliente
+      responses:
+        '200':
+          description: Cliente removido com sucesso
+        '400':
+          description: Código inválido
+    put:
+      tags:
+        - cliente
+      summary: Atualiza as informações do cliente
+      operationId: autalizaCliente
+      requestBody:
+        description: Valores para atualização.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCliente'
+        required: true
+      responses:
+        '200':
+          description: Atualização com sucesso
+        '400':
+          description: Código inválido
+  /clientes:
+    get:
+      tags:
+        - cliente
+      summary: Obtem os clientes no sistema
+      operationId: obtemClientes
+      responses:
+        '200':
+          description: Clientes obtidos com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cliente'       
+        '400':
+          description: Código inválido
+    post:
+      tags:
+        - cliente
+      summary: Cria um novo cliente
+      operationId: criaCliente
+      requestBody:
+        description: Valores para criar
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCliente'
+        required: true
+      responses:
+        '200':
+          description: Sucesso na criação, use o GET para obter o id.
+  /lojas/{codLoja}:
+    parameters:
+        - name: codLoja
+          in: path
+          description: Código da loja
+          required: true
+          schema:
+            type: string
+    get:
+      tags:
+        - loja
+      summary: Obtem a loja pelo codLoja
+      operationId: obtemLoja
+      responses:
+        '200':
+          description: Sucesso na obtenção
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loja'          
+        '400':
+          description: Código inválido
+    delete:
+      tags:
+        - loja
+      summary: Remove a loja do sistema
+      operationId: removeLoja
+      responses:
+        '200':
+          description: Loja removida
+        '400':
+          description: Código inválido
+    put:
+      tags:
+        - loja
+      summary: Atualiza as informações da loja
+      operationId: atualizaLoja
+      requestBody:
+        description: Valores para atualização.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLoja'
+        required: true
+      responses:
+        '200':
+          description: Atualização com sucesso
+        '400':
+          description: Código inválido
+  /lojas/{codLoja}/gestores/{codGestor}:
+    parameters:
+        - name: codLoja
+          in: path
+          description: Código da loja
+          required: true
+          schema:
+            type: string
+        - name: codGestor
+          in: path
+          description: Código do gestor
+          required: true
+          schema:
+            type: string
+    get:
+      tags:
+        - loja
+        - gestor
+      summary: Obtem o gestor da loja
+      operationId: obtemGestor
+      responses:
+        '200':
+          description: Sucesso na obtenção
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gestor'          
+        '400':
+          description: Código inválido
+    delete:
+      tags:
+        - loja
+        - gestor
+      summary: Remove o gestor do sistema
+      operationId: removeGestor
+      responses:
+        '200':
+          description: Gestor removido
+        '400':
+          description: Código inválido
+    put:
+      tags:
+        - loja
+        - gestor
+      summary: Atualiza as informações do gestor
+      operationId: atualizaGestor
+      requestBody:
+        description: Valores para atualização.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGestor'
+        required: true
+      responses:
+        '200':
+          description: Atualização com sucesso
+        '400':
+          description: Código inválido
+  /lojas/{codLoja}/gestores:
+      parameters:
+        - name: codLoja
+          in: path
+          description: Código da loja
+          required: true
+          schema:
+            type: string
+      get:
+        tags:
+          - loja
+          - gestor
+        summary: Obtem os gestores da loja no sistema
+        operationId: obtemGestores
+        responses:
+          '200':
+            description: Gestores obtidos com sucesso
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Gestor'       
+          '400':
+            description: Código inválido
+      post:
+        tags:
+          - loja
+          - gestor
+        summary: Cria um novo loja
+        operationId: criaGestor
+        requestBody:
+          description: Valores para criar
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateGestor'
+          required: true
+        responses:
+          '200':
+            description: Sucesso na criação, use o GET para obter o id.
+  /lojas:
+    get:
+      tags:
+        - loja
+      summary: Obtem as lojas no sistema
+      operationId: obtemLojas
+      responses:
+        '200':
+          description: Lojas obtidas com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Loja'       
+        '400':
+          description: Código inválido
+    post:
+      tags:
+        - loja
+      summary: Cria uma nova loja
+      operationId: criaLoja
+      requestBody:
+        description: Valores para criar
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLoja'
+        required: true
+      responses:
+        '200':
+          description: Sucesso na criação, use o GET para obter o id.
+components:
+  schemas:
+    Endereco:
+      type: object
+      properties:
+        codEndereco:
+          type: string
+        numero:
+          type: integer
+          format: int64
+        cidade:
+          type: string
+        cep:
+          type: string
+        estado:
+          type: string
+        rua:
+          type: string
+    UpdateEndereco:
+      type: object
+      properties:
+        numero:
+          type: integer
+          format: int64
+        cidade:
+          type: string
+        cep:
+          type: string
+        estado:
+          type: string
+        rua:
+          type: string
+    CreateEndereco:
+      type: object
+      properties:
+        numero:
+          type: integer
+          format: int64
+        cidade:
+          type: string
+        cep:
+          type: string
+        estado:
+          type: string
+        rua:
+          type: string
+    CategoriaLoja:
+      type: object
+      properties:
+        codCategoria:
+          type: string
+        categoria:
+          type: string
+    CategoriaProduto:
+      type: object
+      properties:
+        codCategoria:
+          type: string
+        categoria:
+          type: string
+    Cliente:
+      type: object
+      properties:
+        codCliente:
+          type: string
+        codEndereco:
+          type: string
+        nome:
+          type: string
+        email:
+          type: string
+    UpdateCliente:
+      type: object
+      properties:
+        nome:
+          type: string
+        email:
+          type: string
+    CreateCliente:
+      type: object
+      properties:
+        codEndereco:
+          type: string
+        nome:
+          type: string
+        email:
+          type: string
+    Loja:
+      type: object
+      properties:
+        codLoja:
+          type: string
+        descricao:
+          type: string
+        nome:
+          type: string
+        categoria:
+          type: string
+        endereco:
+          type: object
+          properties:
+            codEndereco:
+              type: string
+            numero:
+              type: integer
+              format: int64
+            cidade:
+              type: string
+            cep:
+              type: string
+            estado:
+              type: string
+            rua:
+              type: string
+    UpdateLoja:
+      type: object
+      properties:
+        descricao:
+          type: string
+        nome:
+          type: string
+    CreateLoja:
+      type: object
+      properties:
+        codCategoria:
+          type: string
+        codEndereco:
+          type: string
+        descricao:
+          type: string
+        nome:
+          type: string
+    Gestor:
+      type: object
+      properties:
+        codGestor:
+          type: string
+        funcao:
+          type: string
+        nome:
+          type: string
+        cpf:
+          type: string
+        numeroTelefone:
+          type: string
+    UpdateGestor:
+      type: object
+      properties:
+        nome:
+          type: string
+        cpf:
+          type: string
+        numeroTelefone:
+          type: string
+        funcao:
+          type: string
+    CreateGestor:
+      type: object
+      properties:
+        nome:
+          type: string
+        cpf:
+          type: string
+        numeroTelefone:
+          type: string
+        funcao:
+          type: string      
+    
