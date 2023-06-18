@@ -30,7 +30,7 @@ type ComposedProdutoResult = {
   preco: number;
   quantidade: number;
   nome: string;
-  descrica: string;
+  descricao: string;
 };
 
 export default class ProdutoLojaController {

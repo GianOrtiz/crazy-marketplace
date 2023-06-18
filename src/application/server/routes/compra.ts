@@ -22,8 +22,9 @@ export const registerCompraRoutes = (
     },
     path: '/compras',
     handler: async (request) => {
-      const { codCliente, codEndereco, codProduto, data, quantidade, valor } =
-        request.payload as Omit<Compra, 'codCompra'>;
+      const { codCliente, codEndereco, codProduto, quantidade, valor } =
+        request.payload as Omit<Compra, 'codCompra' | 'data'>;
+      const data = new Date();
       await controller.create({
         codCliente,
         codEndereco,

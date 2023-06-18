@@ -22,6 +22,8 @@ tags:
     description: CRUD de compras
   - name: stats
     description: Consultas de sumarização
+  - name: gestor
+    description: CRUD de gestor
 paths:
   /enderecos/{codEndereco}:
     get:
@@ -303,7 +305,7 @@ paths:
       operationId: obtemCliente
       responses:
         '200':
-          description: Categoria obtida com sucesso
+          description: Cliente obtida com sucesso
           content:
             application/json:
               schema:
@@ -365,6 +367,87 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateCliente'
+        required: true
+      responses:
+        '200':
+          description: Sucesso na criação, use o GET para obter o id.
+  /produtos/{codProduto}:
+    parameters:
+        - name: codProduto
+          in: path
+          description: Código do produto
+          required: true
+          schema:
+            type: string
+    get:
+      tags:
+        - produto
+      summary: Obtem o produto pelo codProduto
+      operationId: obtemProduto
+      responses:
+        '200':
+          description: Produto obtido com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'          
+        '400':
+          description: Código inválido
+    delete:
+      tags:
+        - produto
+      summary: Remove o produto do sistema
+      operationId: removeProduto
+      responses:
+        '200':
+          description: Produto removido com sucesso
+        '400':
+          description: Código inválido
+    put:
+      tags:
+        - produto
+      summary: Atualiza as informações do produto
+      operationId: autalizaProduto
+      requestBody:
+        description: Valores para atualização.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProduto'
+        required: true
+      responses:
+        '200':
+          description: Atualização com sucesso
+        '400':
+          description: Código inválido
+  /produtos:
+    get:
+      tags:
+        - produto
+      summary: Obtem os produtos no sistema
+      operationId: obtemProdutos
+      responses:
+        '200':
+          description: Produtos obtidos com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'       
+        '400':
+          description: Código inválido
+    post:
+      tags:
+        - produto
+      summary: Cria um novo produto
+      operationId: criaProduto
+      requestBody:
+        description: Valores para criar
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProduto'
         required: true
       responses:
         '200':
@@ -517,6 +600,105 @@ paths:
         responses:
           '200':
             description: Sucesso na criação, use o GET para obter o id.
+  /lojas/{codLoja}/produtos/{codProduto}:
+    parameters:
+        - name: codLoja
+          in: path
+          description: Código da loja
+          required: true
+          schema:
+            type: string
+        - name: codProduto
+          in: path
+          description: Código do produto
+          required: true
+          schema:
+            type: string
+    get:
+      tags:
+        - loja
+        - produto
+      summary: Obtem o produto da loja
+      operationId: obtemProdutoLoja
+      responses:
+        '200':
+          description: Sucesso na obtenção
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoLoja'          
+        '400':
+          description: Código inválido
+    delete:
+      tags:
+        - loja
+        - produto
+      summary: Remove o produto da loja do sistema
+      operationId: removeProdutoLoja
+      responses:
+        '200':
+          description: Produto removido da loja
+        '400':
+          description: Código inválido
+    put:
+      tags:
+        - loja
+        - produto
+      summary: Atualiza as informações do produto da loja
+      operationId: atualizaProdutoLoja
+      requestBody:
+        description: Valores para atualização.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProdutoLoja'
+        required: true
+      responses:
+        '200':
+          description: Atualização com sucesso
+        '400':
+          description: Código inválido
+  /lojas/{codLoja}/produtos:
+      parameters:
+        - name: codLoja
+          in: path
+          description: Código da loja
+          required: true
+          schema:
+            type: string
+      get:
+        tags:
+          - loja
+          - produto
+        summary: Obtem os produtos da loja no sistema
+        operationId: obtemProdutosLoja
+        responses:
+          '200':
+            description: Produtos da loja obtidos com sucesso
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ProdutoLoja'       
+          '400':
+            description: Código inválido
+      post:
+        tags:
+          - loja
+          - produto
+        summary: Cria um novo produto da loja
+        operationId: criaProdutoLoja
+        requestBody:
+          description: Valores para criar
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProdutoLoja'
+          required: true
+        responses:
+          '200':
+            description: Sucesso na criação, use o GET para obter o id.
   /lojas:
     get:
       tags:
@@ -549,6 +731,132 @@ paths:
       responses:
         '200':
           description: Sucesso na criação, use o GET para obter o id.
+  /compras/{codCompra}:
+      parameters:
+        - name: codCompra
+          in: path
+          description: Código da compra
+          required: true
+          schema:
+            type: string
+      get:
+        tags:
+          - compra
+        summary: Obtem a compra no sistema
+        operationId: obtemCompra
+        responses:
+          '200':
+            description: Sucesso na obtenção
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Compra'          
+          '400':
+            description: Código inválido
+      delete:
+        tags:
+          - compra
+        summary: Remove a compra do sistema
+        operationId: removeCompra
+        responses:
+          '200':
+            description: Compra removida
+          '400':
+            description: Código inválido
+      put:
+        tags:
+          - compra
+        summary: Atualiza as informações da compra
+        operationId: atualizaCompra
+        requestBody:
+          description: Valores para atualização.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCompra'
+          required: true
+        responses:
+          '200':
+            description: Atualização com sucesso
+          '400':
+            description: Código inválido
+  /compras:
+    get:
+      tags:
+        - compra
+      summary: Obtem as compras no sistema
+      operationId: obtemCompras
+      responses:
+        '200':
+          description: Compras obtidas com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Compra'       
+        '400':
+          description: Código inválido
+    post:
+      tags:
+        - compra
+      summary: Cria uma nova compra
+      operationId: criaCompra
+      requestBody:
+        description: Valores para criar
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCompra'
+        required: true
+      responses:
+        '200':
+          description: Sucesso na criação, use o GET para obter o id.
+  /stats/average-city-sells:
+    get:
+      tags:
+        - stats
+      summary: Obtem a média de vendas por cidades
+      operationId: obtemMediaDeVendas
+      responses:
+        '200':
+          description: Sucesso na obtenção
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AverageCitySells'          
+        '400':
+          description: Código inválido
+  /stats/average-product-prices:
+    get:
+      tags:
+        - stats
+      summary: Obtem a média de valores dos produtos
+      operationId: obtemMediaDeValores
+      responses:
+        '200':
+          description: Sucesso na obtenção
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AverageProductPrices'          
+        '400':
+          description: Código inválido
+  /stats/total-product-sells:
+    get:
+      tags:
+        - stats
+      summary: Obtem o total de valor de produtos vendidos
+      operationId: obtemTotalProdutos
+      responses:
+        '200':
+          description: Sucesso na obtenção
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalProductSells'          
+        '400':
+          description: Código inválido
 components:
   schemas:
     Endereco:
@@ -716,4 +1024,133 @@ components:
           type: string
         funcao:
           type: string      
-    
+    CreateProdutoLoja:
+      type: object
+      properties:
+        codProduto:
+          type: string
+        preco:
+          type: number
+        quantidade:
+          type: integer
+          format: int64
+    UpdateProdutoLoja:
+      type: object
+      properties:
+        preco:
+          type: number
+        quantidade:
+          type: integer
+          format: int64
+    ProdutoLoja:
+      type: object
+      properties:
+        codProduto:
+          type: string
+        codLoja:
+          type: string
+        preco:
+          type: number
+        quantidade:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        descricao:
+          type: string
+    CreateProduto:
+      type: object
+      properties:
+        codCategoria:
+          type: string
+        nome:
+          type: string
+        descricao:
+          type: string
+    UpdateProduto:
+      type: object
+      properties:
+        nome:
+          type: string
+        descricao:
+          type: string
+    Produto:
+      type: object
+      properties:
+        nome:
+          type: string
+        descricao:
+          type: string
+        codProduto:
+          type: string
+        codCategoria:
+          type: string
+    CreateCompra:
+      type: object
+      properties:
+        codCliente:
+          type: string
+        codEndereco:
+          type: string
+        codProduto:
+          type: string
+        quantidade:
+          type: integer
+          format: int64
+        valor:
+          type: number
+    Compra:
+      type: object
+      properties:
+        codCompra:
+          type: string
+        codCliente:
+          type: string
+        codEndereco:
+          type: string
+        codProduto:
+          type: string
+        data:
+          type: string
+        quantidade:
+          type: integer
+          format: int64
+        valor:
+          type: number
+    UpdateCompra:
+      type: object
+      properties:
+        quantidade:
+          type: integer
+          format: int64
+        valor:
+          type: number
+    TotalProductSells:
+      type: object
+      properties:
+        total:
+          type: number
+        nome:
+          type: string
+        ano:
+          type: integer
+          format: int64
+        mes:
+          type: integer
+          format: int64
+    AverageCitySells:
+      type: object
+      properties:
+        mediaQuantidade:
+          type: number
+        mediaValor:
+          type: number
+        cidade:
+          type: string
+    AverageProductPrices:
+      type: object
+      properties:
+        precoMedio:
+          type: number
+        nome:
+          type: string

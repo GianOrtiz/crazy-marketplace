@@ -7,7 +7,7 @@ export const registerStatsRoutes = (
 ) => {
   hapi.route({
     method: 'GET',
-    path: '/stats/average_city_sells',
+    path: '/stats/average-city-sells',
     handler: async () => {
       const averageCitySells = await controller.averageCitySells();
       return averageCitySells;
@@ -15,7 +15,7 @@ export const registerStatsRoutes = (
   });
   hapi.route({
     method: 'GET',
-    path: '/stats/average_product_prices',
+    path: '/stats/average-product-prices',
     handler: async () => {
       const averageProdutoPrices = await controller.averageProductPrices();
       return averageProdutoPrices;
