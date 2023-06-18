@@ -3,9 +3,6 @@ import { config } from '../config';
 import { Pool } from 'pg';
 import { getConnectionPool } from '../../infrastructure/sql';
 import { Controllers, setupControllers } from '../controller';
-import { registerCategoriaLojaRoutes } from './routes/categoria-loja';
-import { registerEnderecoRoutes } from './routes/endereco';
-import { registerCategoriaProdutoRoutes } from './routes/categoria-produto';
 import { registerRoutes } from './routes';
 
 export default class Server {

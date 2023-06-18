@@ -2,6 +2,7 @@ import { Pool } from 'pg';
 import * as uuid from 'uuid';
 import { CategoriaLoja, Endereco, Loja } from '../../domain';
 import GestorController from './gestor';
+import ProdutoLojaController from './produto-loja';
 
 type CreateArgs = {
   loja: Omit<Loja, 'codLoja'>;
@@ -42,7 +43,8 @@ type LojaResult = Loja & { endereco: Omit<Endereco, 'codEndereco'> } & Omit<
 export default class LojaController {
   constructor(
     private databaseConnPool: Pool,
-    public gestorController: GestorController
+    public gestorController: GestorController,
+    public produtoLojaController: ProdutoLojaController
   ) {}
 
   async create({
