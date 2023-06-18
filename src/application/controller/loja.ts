@@ -1,6 +1,7 @@
 import { Pool } from 'pg';
 import * as uuid from 'uuid';
 import { CategoriaLoja, Endereco, Loja } from '../../domain';
+import GestorController from './gestor';
 
 type CreateArgs = {
   loja: Omit<Loja, 'codLoja'>;
@@ -39,7 +40,10 @@ type LojaResult = Loja & { endereco: Omit<Endereco, 'codEndereco'> } & Omit<
   >;
 
 export default class LojaController {
-  constructor(private databaseConnPool: Pool) {}
+  constructor(
+    private databaseConnPool: Pool,
+    public gestorController: GestorController
+  ) {}
 
   async create({
     loja: { descricao, nome },
@@ -69,7 +73,9 @@ export default class LojaController {
     ]);
   }
 
-  async retrieve({ codLoja }: RetrieveArgs): Promise<LojaResult | LojaResult[]> {
+  async retrieve({
+    codLoja,
+  }: RetrieveArgs): Promise<LojaResult | LojaResult[]> {
     if (codLoja) return this.getOne(codLoja);
     return this.getAll();
   }

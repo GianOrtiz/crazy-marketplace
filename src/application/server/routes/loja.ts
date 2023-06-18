@@ -1,5 +1,5 @@
 import Hapi from '@hapi/hapi';
-import { Loja } from '../../../domain';
+import { Gestor, Loja } from '../../../domain';
 import LojaController from '../../controller/loja';
 
 type PostPayload = {
@@ -95,4 +95,114 @@ export const registerLojaRoutes = (
       return 'Ok';
     },
   });
+  hapi.route({
+    method: 'POST',
+    options: {
+      payload: {
+        allow: 'application/json',
+        parse: true,
+        output: 'data',
+      },
+    },
+    path: '/lojas/{codLoja}/gestores',
+    handler: async (request, h) => {
+      const codLoja = request.params.codLoja as string | undefined;
+      if (!codLoja) {
+        h.response().code(400);
+        return;
+      }
+      const { nome, cpf, funcao, numeroTelefone } = request.payload as Omit<Gestor, 'codGestor'>;
+      await controller.gestorController.create({
+        codLoja: codLoja,
+        cpf,
+        funcao,
+        nome,
+        numeroTelefone,
+      });
+      return 'Ok';
+    },
+  });
+  hapi.route({
+    method: 'PUT',
+    options: {
+      payload: {
+        allow: 'application/json',
+        parse: true,
+        output: 'data',
+      },
+    },
+    path: '/lojas/{codLoja}/gestores/{codGestor}',
+    handler: async (request, h) => {
+      const codLoja = request.params.codLoja as string | undefined;
+      if (!codLoja) {
+        h.response().code(400);
+        return;
+      }
+      
+      const codGestor = request.params.codGestor as string | undefined;
+      if (!codGestor) {
+        h.response().code(400);
+        return;
+      }
+
+      const { cpf, funcao, nome, numeroTelefone } = request.payload as Omit<Gestor, 'codGestor' | 'codLoja'>;
+      await controller.gestorController.update({
+        codGestor,
+        gestor: {
+          cpf,
+          funcao,
+          nome,
+          numeroTelefone,
+        }
+      });
+      return 'Ok';
+    },
+  });
+  hapi.route({
+    method: 'GET',
+    path: '/lojas/{codLoja}/gestores',
+    handler: async (request, h) => {
+      console.log('A');
+      const codLoja = request.params.codLoja as string | undefined;
+      if (!codLoja) {
+        h.response().code(400);
+        return;
+      }
+      return controller.gestorController.retrieve({codLoja});
+    },
+  });
+  hapi.route({
+    method: 'GET',
+    path: '/lojas/{codLoja}/gestores/{codGestor}',
+    handler: async (request, h) => {
+      const codLoja = request.params.codLoja as string | undefined;
+      if (!codLoja) {
+        h.response().code(400);
+        return;
+      }
+      const codGestor = request.params.codGestor as string | undefined;
+      if (!codGestor) {
+        h.response().code(400);
+        return;
+      }
+      return controller.gestorController.retrieve({ codLoja, codGestor });
+    },
+  });
+  hapi.route({
+    method: 'DELETE',
+    path: '/lojas/{codLoja}/gestores/{codGestor}',
+    handler: async (request, h) => {
+      const codGestor = request.params.codGestor as string | undefined;
+      if (!codGestor) {
+        h.response().code(400);
+        return;
+      }
+      
+      await controller.gestorController.delete({
+        codGestor,
+      });
+      return 'Ok';
+    },
+  });
+  
 };

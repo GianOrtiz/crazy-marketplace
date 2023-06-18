@@ -3,6 +3,7 @@ import CategoriaLojaController from './categoria-loja';
 import EnderecoController from './endereco';
 import CategoriaProdutoController from './categoria-produto';
 import LojaController from './loja';
+import GestorController from './gestor';
 
 export type Controllers = {
   categoriaLoja: CategoriaLojaController;
@@ -12,10 +13,11 @@ export type Controllers = {
 };
 
 export const setupControllers = (databaseConnPool: Pool): Controllers => {
+  const gestor = new GestorController(databaseConnPool);
   return {
     categoriaLoja: new CategoriaLojaController(databaseConnPool),
     endereco: new EnderecoController(databaseConnPool),
     categoriaProduto: new CategoriaProdutoController(databaseConnPool),
-    loja: new LojaController(databaseConnPool),
+    loja: new LojaController(databaseConnPool, gestor),
   };
 };
