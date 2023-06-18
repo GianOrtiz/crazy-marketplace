@@ -7,6 +7,7 @@ import GestorController from './gestor';
 import ProdutoController from './produto';
 import ProdutoLojaController from './produto-loja';
 import ClienteController from './cliente';
+import CompraController from './compra';
 
 export type Controllers = {
   categoriaLoja: CategoriaLojaController;
@@ -15,6 +16,7 @@ export type Controllers = {
   loja: LojaController;
   produto: ProdutoController;
   cliente: ClienteController;
+  compra: CompraController;
 };
 
 export const setupControllers = (databaseConnPool: Pool): Controllers => {
@@ -27,5 +29,6 @@ export const setupControllers = (databaseConnPool: Pool): Controllers => {
     loja: new LojaController(databaseConnPool, gestor, produtoLoja),
     produto: new ProdutoController(databaseConnPool),
     cliente: new ClienteController(databaseConnPool),
+    compra: new CompraController(databaseConnPool),
   };
 };
