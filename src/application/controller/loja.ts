@@ -25,6 +25,7 @@ type DeleteArgs = {
 
 type ComposedLojaResult = {
   codLoja: string;
+  codEndereco: string;
   descricao: string;
   nome: string;
   categoria: string;
@@ -35,7 +36,7 @@ type ComposedLojaResult = {
   rua: string;
 };
 
-type LojaResult = Loja & { endereco: Omit<Endereco, 'codEndereco'> } & Omit<
+type LojaResult = Loja & { endereco: Endereco } & Omit<
     CategoriaLoja,
     'codCategoria'
   >;
@@ -54,7 +55,7 @@ export default class LojaController {
   }: CreateArgs): Promise<void> {
     const codLoja = uuid.v4();
     await this.databaseConnPool.query(
-      'INSERT INTO "Loja"("codLoja","codCategoria","codLoja","nome","descricao") VALUES($1,$2,$3,$4,$5)',
+      'INSERT INTO "Loja"("codLoja","codCategoria","codEndereco","nome","descricao") VALUES($1,$2,$3,$4,$5)',
       [codLoja, codCategoria, codEndereco, nome, descricao]
     );
   }
@@ -87,6 +88,7 @@ export default class LojaController {
       `
         SELECT
             "codLoja",
+            "codEndereco",
             "descricao",
             "nome",
             "categoria",
@@ -116,7 +118,29 @@ export default class LojaController {
 
   private async getAll(): Promise<LojaResult[]> {
     const { rows } = await this.databaseConnPool.query<ComposedLojaResult>(
-      'SELECT "codLoja","numero","cidade","cep","estado","rua" FROM "Loja"'
+      `
+      SELECT
+          "codLoja",
+          "codEndereco",
+          "descricao",
+          "nome",
+          "categoria",
+          "numero",
+          "cidade",
+          "cep",
+          "estado",
+          "rua"
+      FROM
+          "Loja"
+      LEFT JOIN
+          "Endereco"
+      ON
+          "Loja"."codEndereco"="Endereco"."codEndereco"
+      LEFT JOIN
+          "CategoriaLoja"
+      ON
+          "Loja"."codCategoria"="CategoriaLoja"."codCategoria"
+      `
     );
     return rows.map((row) => this.convert(row));
   }
@@ -128,6 +152,7 @@ export default class LojaController {
       descricao: data.descricao,
       nome: data.nome,
       endereco: {
+        codEndereco: data.codEndereco,
         cep: data.cep,
         cidade: data.cidade,
         estado: data.estado,
