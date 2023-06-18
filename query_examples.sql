@@ -15,14 +15,18 @@ GROUP BY
 -- Valor total de venda de produtos por mês.
 SELECT
     SUM("valor") AS total,
-    "nome"
-FROM 
+    "nome",
+    EXTRACT(YEAR FROM "data") AS ano,
+    EXTRACT(MONTH FROM "data") AS mes
+FROM
     "Compra"
 RIGHT JOIN
     "Produto"
-ON 
+ON
     "Compra"."codProduto"="Produto"."codProduto"
 GROUP BY
+    ano,
+    mes,
     "Produto"."codProduto";
 
 -- Valor médio dos produtos nas lojas.
