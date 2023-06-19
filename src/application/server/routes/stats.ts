@@ -23,7 +23,7 @@ export const registerStatsRoutes = (
   });
   hapi.route({
     method: 'GET',
-    path: '/stats/total_product_sells',
+    path: '/stats/total-product-sells',
     handler: async () => {
       const totalProductSells = await controller.totalProductSells();
       return totalProductSells;

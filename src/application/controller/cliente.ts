@@ -73,7 +73,7 @@ export default class ClienteController {
       `
         SELECT
             "codCliente",
-            "codEndereco",
+            "Cliente"."codEndereco",
             "nome",
             "email",
             "numero",
@@ -101,7 +101,7 @@ export default class ClienteController {
       `
       SELECT
           "codCliente",
-          "codEndereco",
+          "Cliente"."codEndereco",
           "nome",
           "email",
           "numero",

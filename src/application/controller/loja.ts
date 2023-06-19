@@ -88,7 +88,7 @@ export default class LojaController {
       `
         SELECT
             "codLoja",
-            "codEndereco",
+            "Loja"."codEndereco",
             "descricao",
             "nome",
             "categoria",
@@ -121,7 +121,7 @@ export default class LojaController {
       `
       SELECT
           "codLoja",
-          "codEndereco",
+          "Loja"."codEndereco",
           "descricao",
           "nome",
           "categoria",

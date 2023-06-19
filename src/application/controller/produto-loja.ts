@@ -83,8 +83,8 @@ export default class ProdutoLojaController {
       await this.databaseConnPool.query<ComposedProdutoResult>(
         `
             SELECT
-                "codProduto",
-                "codLoja",
+                "ProdutoLoja"."codProduto",
+                "ProdutoLoja"."codLoja",
                 "preco",
                 "quantidade",
                 "nome",
@@ -111,8 +111,8 @@ export default class ProdutoLojaController {
       await this.databaseConnPool.query<ComposedProdutoResult>(
         `
         SELECT
-            "codProduto",
-            "codLoja",
+            "ProdutoLoja"."codProduto",
+            "ProdutoLoja"."codLoja",
             "preco",
             "quantidade",
             "nome",
@@ -124,7 +124,7 @@ export default class ProdutoLojaController {
         ON
             "Produto"."codProduto"="ProdutoLoja"."codProduto"
         WHERE
-            "ProdutoLoja"."codLoja"=$2
+            "ProdutoLoja"."codLoja"=$1
         `,
         [codLoja]
       );

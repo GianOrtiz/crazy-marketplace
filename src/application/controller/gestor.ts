@@ -73,7 +73,7 @@ export default class GestorController {
             ON
                 "Gestor"."codLoja"="Loja"."codLoja"
             WHERE
-                "codGestor"=$1' AND "Gestor"."codLoja"=$2
+                "codGestor"=$1 AND "Gestor"."codLoja"=$2
       `,
       [codGestor, codLoja]
     );

@@ -25,7 +25,7 @@ export const registerClienteRoutes = (
         output: 'data',
       },
     },
-    path: '/',
+    path: '/clientes',
     handler: async (request) => {
       const { codEndereco, email, nome } = request.payload as PostPayload;
       await controller.create({

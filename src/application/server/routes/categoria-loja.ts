@@ -69,7 +69,7 @@ export const registerCategoriaLojaRoutes = (
   });
   hapi.route({
     method: 'DELETE',
-    path: '/categoria-lojas',
+    path: '/categoria-lojas/{codCategoria}',
     handler: async (request, h) => {
       const codCategoria = request.params.codCategoria as string | undefined;
       if (!codCategoria) {
