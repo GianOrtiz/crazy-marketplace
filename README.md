@@ -14,6 +14,6 @@ Requisitos:
 3. Execute o comando `psql postgres://postgres:secret@localhost:5432 -f dml.sql` para popular o banco com dados iniciais.
 4. Execute o comando `yarn` ou `npm install` para instalar as dependências do projeto.
 5. Execute o comando `yarn start` ou `npm start` para iniciar o sistema.
-6. Abra o arquivo `openapi.yaml` na raiz do diretório em (swagger)[https://editor.swagger.io/], isto irá permitir executar as funcionalidades da API com maior facilidade, ou utilize curl.
+6. Importe o arquivo `openapi.yaml` no Postman e faça as requisições.
 
 
