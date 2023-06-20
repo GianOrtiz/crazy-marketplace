@@ -39,7 +39,7 @@ export default class EnderecoController {
     endereco: { cep, cidade, estado, numero, rua },
   }: UpdateArgs): Promise<void> {
     await this.databaseConnPool.query(
-      'UPDATE "Endereco" SET "cep"=$1, "cidade"=$2, "estado"=$3, "numero"=$4, "rua"=$5 WHERE "codCategoria"=$6',
+      'UPDATE "Endereco" SET "cep"=$1, "cidade"=$2, "estado"=$3, "numero"=$4, "rua"=$5 WHERE "codEndereco"=$6',
       [cep, cidade, estado, numero, rua, codEndereco]
     );
   }

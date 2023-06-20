@@ -31,7 +31,7 @@ export default class GestorController {
     const codGestor = uuid.v4();
     await this.databaseConnPool.query(
       'INSERT INTO "Gestor"("codLoja","codGestor","funcao","nome","cpf","numeroTelefone") VALUES($1,$2,$3,$4,$5,$6)',
-      [codLoja, codGestor, funcao, nome, numeroTelefone, cpf]
+      [codLoja, codGestor, funcao, nome, cpf, numeroTelefone]
     );
   }
 

@@ -99,8 +99,6 @@ export default class LojaController {
             "rua"
         FROM
             "Loja"
-        WHERE
-            "codLoja"=$1'
         LEFT JOIN
             "Endereco"
         ON
@@ -109,6 +107,8 @@ export default class LojaController {
             "CategoriaLoja"
         ON
             "Loja"."codCategoria"="CategoriaLoja"."codCategoria"
+        WHERE
+            "codLoja"=$1
       `,
       [codLoja]
     );

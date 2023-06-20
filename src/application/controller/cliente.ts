@@ -83,12 +83,12 @@ export default class ClienteController {
             "rua"
         FROM
             "Cliente"
-        WHERE
-            "codCliente"=$1'
         LEFT JOIN
             "Endereco"
         ON
             "Cliente"."codEndereco"="Endereco"."codEndereco"
+        WHERE
+            "codCliente"=$1
       `,
       [codCliente]
     );
