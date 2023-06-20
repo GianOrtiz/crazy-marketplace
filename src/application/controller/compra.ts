@@ -80,7 +80,7 @@ export default class CompraController {
             FROM
                 "Compra"
             WHERE
-                "codCompra"=$1'
+                "codCompra"=$1
       `,
       [codCompra]
     );
